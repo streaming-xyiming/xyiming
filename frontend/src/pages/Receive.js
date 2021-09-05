@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import useSWR from 'swr'
 
 import { fromNear } from '../components/Helpers'
+import BN from 'bn.js'
 
 function ReceivePage (props) {
   const profileId = props.signedAccountId
@@ -33,6 +34,31 @@ function ReceivePage (props) {
     console.log('stopping res', res)
   }
 
+  async function enableCron(e) {
+    e.preventDefault()
+
+    console.log(props.cronCat.contract)
+
+    const cronTaskHash = props.cronCat.contract.create_task(
+      {
+        "contract_id": "dev-1630685656410-62108694435619",
+        "function_id": "withdraw",
+        "cadence": "*/1 * * * * *",
+        "recurring": false,
+        "total_deposit": String(parseInt(parseFloat(1000000000000000000000000))),
+        "deposit": String(parseInt(parseFloat(10))),
+        "gas": 300000000000000,
+        // "arguments": {
+        //   "stream_id": "5i7aSJA9rcmNQAVZKDyF5P24YTYDcpfC3akSmCFvu2wq"
+        // }
+      },
+      new BN('300000000000000'),
+      new BN('1000000000000000000000000')
+    )
+
+    console.log(cronTaskHash)
+  }
+
   const fetchAccount = async (...args) => {
     try {
       if (!profileId) {
@@ -59,6 +85,7 @@ function ReceivePage (props) {
                 {input.owner_id}
               </div>
               <small className='col-1 m-1'>
+                {input.stream_id}
                 <small><samp className='text-secondary'>{input.stream_id.substr(0, 6)}...</samp></small>
               </small>
               <small className='col-1 m-1'>
@@ -96,7 +123,7 @@ function ReceivePage (props) {
     })
   }
 
-  console.log(props)
+  // console.log(props)
 
   return (!props.connected) ? (<div className='container g-0 px-5'>Please connect your NEAR Account first</div>) : (
     <div className='container g-0 px-5'>
@@ -133,6 +160,7 @@ function ReceivePage (props) {
         </div>
       </div>
       {inputs}
+      <p><button className="btn btn-primary" onClick={enableCron}>Enable cron</button></p>
     </div>
   )
 }

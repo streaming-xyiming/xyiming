@@ -26,6 +26,14 @@ const MainNearConfig = {
   walletUrl: 'https://wallet.near.org'
 }
 
+const CronConfig = {
+  accountSuffix: 'testnet',
+  networkId: 'testnet',
+  nodeUrl: 'https://rpc.testnet.near.org',
+  contractName: 'cron.in.testnet',
+  walletUrl: 'https://wallet.testnet.near.org',
+}
+
 const NearConfig = IsMainnet ? MainNearConfig : TestNearConfig
 
 class App extends React.Component {
@@ -33,6 +41,8 @@ class App extends React.Component {
     super(props)
 
     this._near = {}
+
+    this.cronCat = {}
 
     this.state = {
       connected: false,
@@ -53,8 +63,11 @@ class App extends React.Component {
   async _initNear () {
     const keyStore = new nearAPI.keyStores.BrowserLocalStorageKeyStore()
     const near = await nearAPI.connect(Object.assign({ deps: { keyStore } }, NearConfig))
+
     this._near.keyStore = keyStore
     this._near.near = near
+
+    this.cronCat = await nearAPI.connect(Object.assign({ deps: { keyStore } }, CronConfig))
 
     this._near.walletConnection = new nearAPI.WalletConnection(near, NearConfig.contractName)
     this._near.accountId = this._near.walletConnection.getAccountId()
@@ -75,6 +88,13 @@ class App extends React.Component {
         'delete_bridge',
         'push_flow',
         'stop_stream'
+      ]
+    })
+
+    this.cronCat.contract = new nearAPI.Contract(this._near.account, CronConfig.contractName, {
+      changeMethods: [
+        'create_task',
+        'update_task'
       ]
     })
 
@@ -118,6 +138,7 @@ class App extends React.Component {
   render () {
     const passProps = {
       _near: this._near,
+      cronCat: this.cronCat,
       refreshAllowance: () => this._near.refreshAllowance(),
       ...this.state
     }
