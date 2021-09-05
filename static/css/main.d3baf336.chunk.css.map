@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/App.scss"],"names":[],"mappings":"AAEA,kBACE,UAAW,CACX,iBAAmB","file":"main.d3baf336.chunk.css","sourcesContent":["/* ./src/index.css */\n\n.navbar-brand > img {\n  height: 2em;\n  margin-right: 0.5em;\n}\n"]}
