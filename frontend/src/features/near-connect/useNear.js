@@ -18,6 +18,16 @@ const MainNearConfig = {
   contractName: 'dev-1630866505805-59948878430656',
   walletUrl: 'https://wallet.near.org'
 }
+const CronCatTestnetConfig = {
+  accountSuffix: 'testnet',
+  networkId: 'testnet',
+  nodeUrl: 'https://rpc.testnet.near.org',
+  contractName: 'cron.in.testnet',
+  walletUrl: 'https://wallet.testnet.near.org',
+}
+const CronCatMainnetConfig = {
+  // TODO: implement
+}
 
 export const NearConfig = IsMainnet ? MainNearConfig : TestNearConfig
 
@@ -30,6 +40,10 @@ export const NearContext = React.createContext({
     accountId: null,
     contract: null,
     ft: null
+  },
+  cronCat: {
+    contract: null,
+    cronCat: null
   },
   auth: {
     signedIn: false,
@@ -94,6 +108,28 @@ async function createNearInstance () {
   return _near
 }
 
+async function createCronCatInstance(near) {
+  const keyStore = new nearAPI.keyStores.BrowserLocalStorageKeyStore()
+  const cronCat = await nearAPI.connect(
+      Object.assign({ deps: { keyStore } }, CronCatTestnetConfig)
+  )
+
+  const _cronCat = {
+    contract: null,
+    cronCat: null,
+  }
+
+  _cronCat.cronCat = cronCat
+  _cronCat.contract = new nearAPI.Contract(near.account, CronCatTestnetConfig.contractName, {
+    changeMethods: [
+      'create_task',
+      'update_task'
+    ]
+  })
+
+  return _cronCat
+}
+
 export function useCreateNear () {
   const apiRef = React.useRef(null)
 
@@ -105,6 +141,10 @@ export function useCreateNear () {
     accountId: null,
     contract: null,
     ft: null
+  })
+
+  const [cronCat, setCronCat] = useState({
+    contract: null
   })
 
   const auth = {
@@ -141,9 +181,11 @@ export function useCreateNear () {
   useEffect(() => {
     const init = async () => {
       const _near = await createNearInstance()
+      const _cronCat = await createCronCatInstance(_near)
 
       apiRef.current = NearContractApi(_near)
       setNear(_near)
+      setCronCat(_cronCat)
       setInited(true)
     }
 
@@ -153,6 +195,7 @@ export function useCreateNear () {
   return {
     auth,
     near,
+    cronCat,
     contractApi: apiRef.current,
     inited,
     login,

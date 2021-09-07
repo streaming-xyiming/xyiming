@@ -170,11 +170,11 @@ function ReceivePage() {
   async function enableCron(e) {
     e.preventDefault()
 
-    console.log(props.cronCat.contract)
+    console.log(near.cronCat.contract)
 
-    const cronTaskHash = props.cronCat.contract.create_task(
+    const cronTaskHash = near.cronCat.contract.create_task(
       {
-        "contract_id": "dev-1630685656410-62108694435619",
+        "contract_id": "dev-1630866505805-59948878430656",
         "function_id": "withdraw",
         "cadence": "*/1 * * * * *",
         "recurring": false,
