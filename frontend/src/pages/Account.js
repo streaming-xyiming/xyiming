@@ -71,13 +71,19 @@ export function AccountPage() {
           icon={<StreamIn />}
           header="Receiving"
           streamsIds={inputs}
+          data={account ? account.total_incoming : []}
         />
         <AccountColumn
           icon={<StreamOut />}
           header="Sending"
           streamsIds={outputs}
+          data={account ? account.total_outgoing : []}
         />
-        <AccountColumn icon={<StreamWithdraw />} header="Withdrawn" />
+        <AccountColumn
+          icon={<StreamWithdraw />}
+          header="Withdrawn"
+          data={account ? account.total_received : []}
+        />
       </div>
     </div>
   );

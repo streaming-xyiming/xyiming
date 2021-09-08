@@ -22,7 +22,24 @@ const streamType = {
   tokens_per_tick: '400000000000',
 };
 
-export function AccountColumn({header, icon, streamsIds}) {
+export function AccountColumn({header, icon, streamsIds, data}) {
+  console.log(data);
+  let a = data.map((record) => {
+    return (
+      <div className="twind-w-full twind-flex twind-items-center">
+        <div className="twind-w-12 twind-mr-12">icon</div>
+        <div className="">
+          <div className="twind-font-bold">{record[0]}</div>
+          <div className="twind-text-gray twind-text-sm">from 2 steams</div>
+        </div>
+        <div className="twind-ml-auto">
+          <span className=" twind-text-3xl">{record[1]}</span>
+          <span>/sec</span>
+        </div>
+      </div>
+    );
+  });
+  console.log(a);
   // const near = useNear();
   //
   // streamsIds = streamsIds || [];
@@ -65,17 +82,7 @@ export function AccountColumn({header, icon, streamsIds}) {
       </h2>
       <div>
         <div className="twind-w-full twind-h-24 twind-rounded-lg twind-bg-card2 twind-flex twind-items-center twind-width-full twind-p-6 twind-mr-4">
-          <div className="twind-w-full twind-flex twind-items-center">
-            <div className="twind-w-12 twind-mr-12">icon</div>
-            <div className="">
-              <div className="twind-font-bold">Bitcoin, BTC</div>
-              <div className="twind-text-gray twind-text-sm">from 2 steams</div>
-            </div>
-            <div className="twind-ml-auto">
-              <span className=" twind-text-3xl">16.405</span>
-              <span>/sec</span>
-            </div>
-          </div>
+          {a}
         </div>
       </div>
     </div>
