@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.b34a9c11.chunk.css",
-    "main.js": "/static/js/main.b0968408.chunk.js",
-    "main.js.map": "/static/js/main.b0968408.chunk.js.map",
+    "main.js": "/static/js/main.d3936663.chunk.js",
+    "main.js.map": "/static/js/main.d3936663.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.4eab1d6a.js",
     "runtime-main.js.map": "/static/js/runtime-main.4eab1d6a.js.map",
     "static/css/2.b7d0b908.chunk.css": "/static/css/2.b7d0b908.chunk.css",
@@ -14,13 +14,13 @@
     "static/js/2.27ead602.chunk.js.LICENSE.txt": "/static/js/2.27ead602.chunk.js.LICENSE.txt",
     "static/media/RUSSIANS_HACK.83d68466.gif": "/static/media/RUSSIANS_HACK.83d68466.gif",
     "static/media/crab.3fbdb8f2.gif": "/static/media/crab.3fbdb8f2.gif",
-    "static/media/logo_stream_with_text.765f9ae8.svg": "/static/media/logo_stream_with_text.765f9ae8.svg"
+    "static/media/logo_stream_with_text.60ac7210.svg": "/static/media/logo_stream_with_text.60ac7210.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.4eab1d6a.js",
     "static/css/2.b7d0b908.chunk.css",
     "static/js/2.27ead602.chunk.js",
     "static/css/main.b34a9c11.chunk.css",
-    "static/js/main.b0968408.chunk.js"
+    "static/js/main.d3936663.chunk.js"
   ]
 }
